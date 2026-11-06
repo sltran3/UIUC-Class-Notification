@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# class checker: private ntfy topic and notification state
+.ntfy_topic
+notified.json

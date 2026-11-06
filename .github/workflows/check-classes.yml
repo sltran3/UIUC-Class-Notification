@@ -1,0 +1,45 @@
+name: Check classes
+
+on:
+  schedule:
+    # every 5 minutes (GitHub may run it a few minutes late when it's busy)
+    - cron: "*/5 * * * *"
+  workflow_dispatch: # lets you run it by hand from the Actions tab
+
+# never run two checks at once
+concurrency:
+  group: check-classes
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      # remember which sections we've already notified about between runs
+      - name: Restore notification state
+        uses: actions/cache/restore@v4
+        with:
+          path: notified.json
+          key: notified-${{ github.run_id }}
+          restore-keys: notified-
+
+      - name: Check Course Explorer
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python main.py --once
+
+      - name: Save notification state
+        uses: actions/cache/save@v4
+        with:
+          path: notified.json
+          key: notified-${{ github.run_id }}
