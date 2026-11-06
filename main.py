@@ -42,7 +42,7 @@ def _load_topic():
 PHONE_TOPIC = _load_topic()
 
 # Where tapping the notification takes you
-REGISTER_URL = "https://banner.apps.uillinois.edu/StudentRegistrationSSB/ssb/registration"
+REGISTER_URL = "https://apps.uillinois.edu/selfservice"
 
 PAGE_URL = "https://courses.illinois.edu/schedule/{year}/{season}/{subject}/{number}"
 XML_URL = "https://courses.illinois.edu/cisapp/explorer/schedule/{year}/{season}/{subject}/{number}.xml"
