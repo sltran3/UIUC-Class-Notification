@@ -2,8 +2,9 @@ name: Check classes
 
 on:
   schedule:
-    # every 5 minutes (GitHub may run it a few minutes late when it's busy)
-    - cron: "*/5 * * * *"
+    # every 5 minutes, offset to :02, :07, :12, ... :57 so it never lands on the busy
+    # :00/:15/:30/:45 marks (GitHub may still run it a few minutes late when it's busy)
+    - cron: "2-59/5 * * * *"
   workflow_dispatch: # lets you run it by hand from the Actions tab
 
 # never run two checks at once
